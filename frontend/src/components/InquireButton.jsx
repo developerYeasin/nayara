@@ -9,7 +9,7 @@ export default function InquireButton({ productName, message, label = 'Inquire N
       href={whatsappUrl(settings.whatsapp_number, text)}
       target="_blank"
       rel="noreferrer"
-      className="block bg-charcoal py-3.5 text-center font-sans text-[10px] uppercase tracking-label text-white transition-colors duration-300 hover:bg-black"
+      className="block rounded-sm bg-charcoal py-3.5 text-center text-xs font-semibold uppercase tracking-[0.04em] text-white transition-colors duration-300 hover:bg-black"
     >
       {label}
     </a>

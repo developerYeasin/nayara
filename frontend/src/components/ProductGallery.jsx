@@ -12,14 +12,14 @@ export default function ProductGallery({ images }) {
 
   return (
     <section aria-label="Product images">
-      <div className="relative -mx-4 aspect-[4/5] overflow-hidden bg-warm md:mx-0">
+      <div className="relative h-[55vh] overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.img
             key={image.url}
             src={image.url}
             alt={image.alt}
             draggable={false}
-            className="absolute inset-0 h-full w-full touch-pan-y select-none object-cover saturate-[.82]"
+            className="absolute inset-0 h-full w-full touch-pan-y select-none object-contain"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -34,7 +34,7 @@ export default function ProductGallery({ images }) {
           />
         </AnimatePresence>
       </div>
-      <div className="mt-3 flex justify-center gap-2">
+      <div className="mt-5 flex justify-center gap-1">
         {images.map((thumb, index) => (
           <button
             key={thumb.url}
@@ -42,9 +42,9 @@ export default function ProductGallery({ images }) {
             aria-label={`View image ${index + 1}`}
             aria-current={index === active}
             onClick={() => setActive(index)}
-            className={`h-[68px] w-[54px] bg-warm transition-opacity duration-500 ${index === active ? 'opacity-100' : 'opacity-60'}`}
+            className={`h-11 w-14 transition-opacity duration-500 ${index === active ? 'opacity-100' : 'opacity-60'}`}
           >
-            <img src={thumb.url} alt="" loading="lazy" className="h-full w-full object-cover saturate-[.82]" />
+            <img src={thumb.url} alt="" loading="lazy" className="h-full w-full object-contain" />
           </button>
         ))}
       </div>

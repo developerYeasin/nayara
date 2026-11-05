@@ -121,8 +121,21 @@ const pools = {
   stools: ['stool', 'barStool', 'warm'],
 };
 
-// Rotates the pool so each product leads with a different photo where possible.
-export const imagesFor = (categorySlug, index) => {
+const SHAPES = {
+  single: 'armchair', accent: 'armchair', two: 'greensofa', three: 'tansofa', lshape: 'chester', sectional: 'chester', curve: 'chester',
+  chair: 'blackchair', barstool: 'barstool', stool: 'stool',
+};
+const RECOLORABLE = ['armchair', 'chester', 'greensofa', 'tansofa'];
+const RECOLOR_NAMES = ['olive', 'stone', 'grey', 'cream', 'teal', 'navy'];
+
+// Cut-outs on white where one exists, then a room photo, as in the reference site.
+export const imagesFor = (categorySlug, index, kind, color) => {
   const pool = pools[categorySlug];
-  return Array.from({ length: Math.min(4, pool.length) }, (_, i) => photo(P[pool[(index + i) % pool.length]]));
+  const room = photo(P[pool[index % pool.length]]);
+  const shape = SHAPES[kind];
+  if (!shape) return [0, 1, 2].map((i) => photo(P[pool[(index + i) % pool.length]]));
+  if (!RECOLORABLE.includes(shape)) return [`/media/products/${shape}.webp`, room];
+  const first = RECOLOR_NAMES.includes(color) ? color : 'stone';
+  const colors = [first, ...['olive', 'stone', 'grey'].filter((c) => c !== first)].slice(0, 3);
+  return [...colors.map((c) => `/media/products/${shape}-${c}.webp`), room];
 };

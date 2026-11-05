@@ -13,17 +13,15 @@ const wait = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
 // Maps the tapped thumbnail onto the area the detail page's main image occupies.
 function flightPath(rect) {
   const vw = window.innerWidth;
-  const desktop = vw >= 1024;
-  const stage = Math.min(vw, 1280);
-  const targetWidth = desktop ? (stage - 48 - 56) * 0.6 : vw >= 768 ? vw - 48 : vw;
-  const left = desktop ? (vw - stage) / 2 + 24 : (vw - targetWidth) / 2;
-  const searchHeight = document.querySelector('form[role="search"]')?.offsetHeight ?? 44;
-  const top = 64 + searchHeight;
-  const scale = targetWidth / rect.width;
+  const vh = window.innerHeight;
+  const targetWidth = Math.min(vw - 32, 900);
+  const targetHeight = vh * 0.55;
+  const scale = Math.min(targetWidth / rect.width, targetHeight / rect.height);
+  const top = 64 + (document.querySelector('form[role="search"]')?.offsetHeight ?? 44);
   return {
     scale,
-    x: left + targetWidth / 2 - (rect.left + rect.width / 2),
-    y: top + (rect.height * scale) / 2 - (rect.top + rect.height / 2),
+    x: vw / 2 - (rect.left + rect.width / 2),
+    y: top + targetHeight / 2 - (rect.top + rect.height / 2),
   };
 }
 
@@ -70,7 +68,7 @@ export default function PageTransition({ children }) {
             <motion.img
               src={flight.product.image}
               alt=""
-              className="fixed object-cover saturate-[.82]"
+              className="fixed object-contain"
               style={{ left: flight.rect.left, top: flight.rect.top, width: flight.rect.width, height: flight.rect.height }}
               initial={{ x: 0, y: 0, scale: 1, rotate: 0, rotateY: 0 }}
               animate={{

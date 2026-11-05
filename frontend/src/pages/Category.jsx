@@ -21,7 +21,7 @@ export default function Category() {
       <p className="mt-3 border-y border-line py-3 text-center text-[11px] uppercase tracking-[0.2em]">Custom-Design Services Available</p>
       <div className="py-10 text-center md:py-14">
         <Breadcrumb className="justify-center" items={[{ label: 'Home', to: '/' }, { label: category?.name ?? slug.replace(/-/g, ' ') }]} />
-        <h1 className="mt-3 text-5xl font-light md:text-7xl">{category?.name ?? ' '}</h1>
+        <h1 className="mt-4 text-3xl font-light uppercase tracking-[0.1em] md:text-4xl">{category?.name ?? ' '}</h1>
       </div>
       <div className="pb-16">
         {loading && <ProductGridSkeleton />}

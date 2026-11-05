@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 function Line({ rotated }) {
   return (
     <motion.span
-      className="absolute left-0 top-1/2 h-px w-full bg-ink"
+      className="absolute left-0 top-1/2 h-0.5 w-full bg-ink"
       animate={{ rotate: rotated ? 90 : 0, opacity: 1 }}
       transition={{ duration: 0.35 }}
     />
@@ -17,7 +17,7 @@ export function AccordionItem({ title, children }) {
   return (
     <div className="border-b border-line">
       <h2>
-        <button type="button" aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)} className="flex w-full items-center justify-between py-4 text-left text-sm font-medium">
+        <button type="button" aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)} className="flex w-full items-center justify-between py-4 text-left text-base font-semibold">
           {title}
           <span aria-hidden="true" className="relative h-3 w-3">
             <Line rotated={false} />

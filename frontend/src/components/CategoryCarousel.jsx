@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import FadeImage from './FadeImage.jsx';
+import { CategoryIcon } from './icons.jsx';
 import { useSite } from '../context/SiteContext.jsx';
-import { categoryPhotos } from '../data/home.js';
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export default function CategoryCarousel() {
   const { categories } = useSite();
-  const [plugins] = useState(() => (reducedMotion() ? [] : [Autoplay({ delay: 3800, stopOnInteraction: false })]));
-  const [viewportRef, embla] = useEmblaCarousel({ loop: true, align: 'start', duration: 45 }, plugins);
+  const [plugins] = useState(() => (reducedMotion() ? [] : [Autoplay({ delay: 3500, stopOnInteraction: false })]));
+  const [viewportRef, embla] = useEmblaCarousel({ loop: true, align: 'start', duration: 40 }, plugins);
   const [selected, setSelected] = useState(0);
 
   useEffect(() => {
@@ -24,24 +23,18 @@ export default function CategoryCarousel() {
   useEffect(() => { embla?.reInit(); }, [embla, categories.length]);
 
   return (
-    <section aria-labelledby="categories-heading" className="mx-auto max-w-7xl pb-16 md:pb-24">
-      <h2 id="categories-heading" className="mb-7 px-4 font-sans text-[10px] uppercase tracking-label text-muted md:px-6">Shop by category</h2>
-      <div ref={viewportRef} className="overflow-hidden pl-4 md:pl-6">
+    <section aria-label="Shop by category" className="mx-auto max-w-7xl py-12 md:py-20">
+      <div ref={viewportRef} className="overflow-hidden">
         <div className="flex">
-          {categories.map((category, index) => (
-            <Link key={category.slug} to={`/category/${category.slug}`} className="group min-w-0 flex-[0_0_62%] pr-3 md:flex-[0_0_25%] lg:flex-[0_0_20%]">
-              <div className="aspect-[3/4] overflow-hidden bg-warm">
-                <FadeImage src={categoryPhotos[category.slug]} alt="" className="h-full w-full object-cover saturate-[.8] group-hover:scale-105" />
-              </div>
-              <div className="mt-3 flex items-baseline justify-between">
-                <span className="text-lg font-light">{category.name}</span>
-                <span className="font-sans text-[10px] text-muted">{String(index + 1).padStart(2, '0')}</span>
-              </div>
+          {categories.map((category) => (
+            <Link key={category.slug} to={`/category/${category.slug}`} className="flex min-w-0 flex-[0_0_50%] flex-col items-center md:flex-[0_0_25%] lg:flex-[0_0_20%]">
+              <CategoryIcon slug={category.slug} className="h-24 w-24 md:h-28 md:w-28" />
+              <span className="mt-4 text-xs uppercase tracking-[0.04em]">{category.name}</span>
             </Link>
           ))}
         </div>
       </div>
-      <div className="mt-6 flex justify-center">
+      <div className="mt-8 flex justify-center">
         {categories.map((category, index) => (
           <button
             key={category.slug}
@@ -51,7 +44,7 @@ export default function CategoryCarousel() {
             onClick={() => embla?.scrollTo(index)}
             className="flex h-6 w-[18px] items-center justify-center"
           >
-            <span className={`h-1 w-1 rounded-full transition-colors duration-500 ${index === selected ? 'bg-ink' : 'bg-[#cfcbc4]'}`} />
+            <span className={`h-1.5 w-1.5 rounded-full transition-colors duration-500 ${index === selected ? 'bg-ink' : 'bg-line'}`} />
           </button>
         ))}
       </div>

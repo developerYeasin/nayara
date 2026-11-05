@@ -18,7 +18,7 @@ try {
     const [[category]] = await pool.execute('SELECT id FROM categories WHERE slug = ?', [categorySlug]);
     const materials = materialsFor(categorySlug);
 
-    for (const [index, [name, , , width, depth, height]] of items.entries()) {
+    for (const [index, [name, kind, color, width, depth, height]] of items.entries()) {
       const slug = slugify(name);
       const description = `The ${name} pairs a calm, architectural silhouette with generous proportions. Made to order, with custom sizes and finishes available on request.`;
       await pool.execute(
@@ -31,7 +31,7 @@ try {
       );
       const [[product]] = await pool.execute('SELECT id FROM products WHERE slug = ?', [slug]);
 
-      const images = imagesFor(categorySlug, index).map((url, i) => ({ url, alt: `${name}, view ${i + 1}` }));
+      const images = imagesFor(categorySlug, index, kind, color).map((url, i) => ({ url, alt: `${name}, view ${i + 1}` }));
 
       await pool.execute('DELETE FROM product_images WHERE product_id = ?', [product.id]);
       for (const [position, image] of images.entries()) {

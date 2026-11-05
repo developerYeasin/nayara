@@ -4,9 +4,9 @@ import { whatsappUrl } from '../lib/whatsapp.js';
 export default function ConsultationCTA() {
   const { settings } = useSite();
   return (
-    <section className="bg-charcoal px-6 py-20 text-center text-white md:py-24">
+    <section className="bg-charcoal px-6 py-16 text-center text-white md:py-24">
       <p className="text-sm font-light italic text-white/70">Need furniture-related guidance?</p>
-      <h2 className="mx-auto mt-3 max-w-3xl text-4xl font-light leading-[1.08] md:text-6xl">
+      <h2 className="mx-auto mt-3 max-w-xl text-3xl font-light leading-tight md:text-4xl">
         Request A Free Consultation And Price Estimate
       </h2>
       <a
