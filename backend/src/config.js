@@ -7,7 +7,7 @@ for (const key of ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME']) {
 export const config = {
   port: Number(process.env.PORT || 4100),
   publicUrl: (process.env.PUBLIC_URL || 'http://localhost:4100').replace(/\/$/, ''),
-  corsOrigins: (process.env.CORS_ORIGIN || 'http://localhost:5310').split(',').map((s) => s.trim()),
+  corsOrigins: (process.env.CORS_ORIGIN || 'http://localhost:5310').split(',').map((s) => s.trim().replace(/\/$/, '')).filter(Boolean),
   whatsappNumber: (process.env.WHATSAPP_NUMBER || '').replace(/\D/g, ''),
   db: {
     host: process.env.DB_HOST,
